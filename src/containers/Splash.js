@@ -11,16 +11,17 @@ import {
 
 class Splash extends React.Component{
 	componentDidMount(){
-		// this.timer = setTimeout(
-		// 	() => this.props.navigator.replace({name: 'home'}), 
-		// 1500)
+		this.timer = setTimeout(
+			() => this.props.navigator.replace({name: 'home'}), 
+		1500)
 	}
 	render(){
 		return(
 			<View style={styles.container}>
 				<View style={styles.section}>
-					<Icon name="tune" size={50}></Icon>
-					<Text style={styles.title}>Flow Control</Text>				
+					<Icon name="tune" size={50} color="#000000"></Icon>
+					<Text style={styles.title}>Flow Control</Text>
+					<Text>Smart City Makers' Fest</Text>
 				</View>
 				<View style={styles.imageWrapper}>
 					<Image source={BackgroundImage} style={styles.canvas} resizeMode="contain" />
@@ -36,7 +37,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff'
 	},
 	title: {
-		fontSize: 25,
+		fontSize: 35,
+		color: '#000000',
 		fontWeight: 'bold'
 	},
 	section: {

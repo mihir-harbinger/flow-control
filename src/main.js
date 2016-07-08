@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
+import configureStore from './store'
+
 import {
   StyleSheet,
   Navigator,
@@ -19,6 +22,8 @@ var ROUTES = {
 }
 
 var _navigator, _route
+
+const store = configureStore()
 
 class FlowControl extends Component {
   constructor(props){
@@ -45,13 +50,15 @@ class FlowControl extends Component {
   }
   render() {
     return (
-      <Navigator 
-        style={styles.container}
-        initialRoute={{name: 'splash', index: 0}}
-        renderScene={this.renderScene}
-        configureScene={() => Navigator.SceneConfigs.PushFromRight}
-      >
-      </Navigator>
+      <Provider store={store}>
+        <Navigator 
+          style={styles.container}
+          initialRoute={{name: 'home', index: 0}}
+          renderScene={this.renderScene}
+          configureScene={() => Navigator.SceneConfigs.PushFromRight}
+        >
+        </Navigator>
+      </Provider>
     );
   }
 }

@@ -19,7 +19,8 @@
   "description": "React native app for Pune hackathon",
   "main": "index.android.js",
   "devDependencies": {
-    "babel-preset-react-native": "^1.9.0"
+    "babel-preset-react-native": "^1.9.0",
+    "redux-logger": "^2.6.1"
   },
   "author": "Mihir Karandikar <karandikar.mihir@outlook.com>",
   "license": "ISC"

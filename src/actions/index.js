@@ -13,41 +13,76 @@ export const stopPumping = () => {
 	}
 }
 
-const maxHeightRequest = () => {
+const overheadDimensionsRequest = () => {
 	return {
-		type: types.MAX_HEIGHT_REQUEST
+		type: types.OVERHEAD_DIMENSIONS_REQUEST
 	}
 }
 
-const maxHeightSuccess = payload => {
+const overheadDimensionsSuccess = payload => {
+	//console.warn("overhead", JSON.stringify(payload, null, 2))
 	return {
-		type: types.MAX_HEIGHT_SUCCESS,
+		type: types.OVERHEAD_DIMENSIONS_SUCCESS,
 		payload
 	}
 }
 
-const maxHeightFailure = () => {
+const overheadDimensionsFailure = () => {
 	return {
-		type: types.MAX_HEIGHT_FAILURE
+		type: types.OVERHEAD_DIMENSIONS_FAILURE
 	}
 }
 
-export const fetchMaxHeight = () => {
+const basementDimensionsRequest = () => {
+	return {
+		type: types.BASEMENT_DIMENSIONS_REQUEST
+	}
+}
+
+const basementDimensionsSuccess = payload => {
+	//console.warn("basement", JSON.stringify(payload, null, 2))
+	return {
+		type: types.BASEMENT_DIMENSIONS_SUCCESS,
+		payload
+	}
+}
+
+const basementDimensionsFailure = () => {
+	return {
+		type: types.BASEMENT_DIMENSIONS_FAILURE
+	}
+}
+
+export const fetchDimensions = () => {
 	return dispatch => {
-		dispatch(maxHeightRequest())
+		dispatch(overheadDimensionsRequest())
+		dispatch(basementDimensionsRequest())
 		Parse.Cloud.run('getMaxHeight', {}).then(
 			function(result){
 				const obj = Object.assign({}, result.reduce((acc, tank) => {
-					acc[tank.toJSON().tank_name] = tank.toJSON().height
+					if(tank.toJSON().tank_name === "overhead"){
+						dispatch(overheadDimensionsSuccess({
+							height: tank.toJSON().height,
+							width: tank.toJSON().width,
+							length: tank.toJSON().length	
+						}))
+					}
+					if(tank.toJSON().tank_name === "basement"){
+						dispatch(basementDimensionsSuccess({
+							height: tank.toJSON().height,
+							width: tank.toJSON().width,
+							length: tank.toJSON().length	
+						}))
+					}					
 					return acc
 				}, {}))
-				dispatch(maxHeightSuccess(obj))
 				// console.warn("[ACTION API] Result: " + JSON.stringify(result, null, 2))
 			},
 			function(error){
-				dispatch(maxHeightFailure())
+				dispatch(overheadFailure())
+				dispatch(basementFailure())
 				// console.warn("[ACTION API] Error: " + JSON.stringify(error, null, 2))
 			}
-		)
+		)		
 	}
 }

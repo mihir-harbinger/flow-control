@@ -11,15 +11,15 @@ import { bindActionCreators } from 'redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import BackgroundImage from '../../assets/glyph-city.png'
 
-import { fetchMaxHeight } from '../actions'
+import { fetchDimensions } from '../actions'
 
 
 class Splash extends React.Component{
 	componentDidMount(){
-		this.props.actions.fetchMaxHeight()
-		// this.timer = setTimeout(
-		// 	() => this.props.navigator.replace({name: 'home'}), 
-		// 1500)
+		this.props.actions.fetchDimensions()
+		this.timer = setTimeout(
+			() => this.props.navigator.replace({name: 'home'}), 
+		1500)
 	}
 	render(){
 		const { isFetching } = this.props
@@ -71,7 +71,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		actions: bindActionCreators({fetchMaxHeight}, dispatch)
+		actions: bindActionCreators({fetchDimensions}, dispatch)
 	}
 }
 

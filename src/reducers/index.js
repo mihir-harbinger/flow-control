@@ -4,9 +4,15 @@ import {types} from '../constants'
 const initialState = {
 	isFetching: false,
 	isPumping: true,
-	maxHeight: {
-		overhead: 0,
-		basement: 0
+	overhead: {
+		width: 0,
+		length: 0,
+		height: 0
+	},
+	basement: {
+		width: 0,
+		length: 0,
+		height: 0
 	}
 }
 
@@ -33,14 +39,25 @@ const isPumping = (state=initialState.isPumping, action) => {
 	}
 }
 
-const maxHeight = (state=initialState.maxHeight, action) => {
+const overhead = (state=initialState.overhead, action) => {
 	switch(action.type){
-		case types.MAX_HEIGHT_SUCCESS:
-			const { overhead, basement } = action.payload
-			return {
-				overhead,
-				basement
-			}
+		case types.OVERHEAD_DIMENSIONS_SUCCESS:
+			return action.payload
+		case types.OVERHEAD_DIMENSIONS_FAILURE:
+		case types.OVERHEAD_DIMENSIONS_REQUEST:
+			return state
+		default:
+			return state
+	}
+}
+
+const basement = (state=initialState.basement, action) => {
+	switch(action.type){
+		case types.BASEMENT_DIMENSIONS_SUCCESS:
+			return action.payload
+		case types.BASEMENT_DIMENSIONS_FAILURE:
+		case types.BASEMENT_DIMENSIONS_REQUEST:
+			return state
 		default:
 			return state
 	}
@@ -49,7 +66,8 @@ const maxHeight = (state=initialState.maxHeight, action) => {
 const rootReducer = combineReducers({
 	isFetching,
 	isPumping,
-	maxHeight
+	overhead,
+	basement
 })
 
 export default rootReducer

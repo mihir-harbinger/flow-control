@@ -12,7 +12,6 @@ import {
 
 import Parse from 'parse/react-native';
 import { KEYS } from './constants'
-import { fetchMaxHeight } from './actions'
 
 import Splash from './containers/Splash'
 import Home from './containers/Home'

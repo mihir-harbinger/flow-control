@@ -12,6 +12,7 @@ import {
 
 import Parse from 'parse/react-native';
 import { KEYS } from './constants'
+import { fetchMaxHeight } from './actions'
 
 import Splash from './containers/Splash'
 import Home from './containers/Home'
@@ -32,6 +33,7 @@ class FlowControl extends Component {
   componentWillMount(){
     const { appId, jsKey, masterKey } = KEYS
     Parse.initialize(appId, jsKey, masterKey)
+    // store.dispatch(fetchMaxHeight())
   }
   componentDidMount(){
     StatusBar.setBackgroundColor('#1976D2')
@@ -53,7 +55,7 @@ class FlowControl extends Component {
       <Provider store={store}>
         <Navigator 
           style={styles.container}
-          initialRoute={{name: 'home', index: 0}}
+          initialRoute={{name: 'splash', index: 0}}
           renderScene={this.renderScene}
           configureScene={() => Navigator.SceneConfigs.PushFromRight}
         >

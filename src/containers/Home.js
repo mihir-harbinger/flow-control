@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
+	ToolbarAndroid,
 	StyleSheet,
 	View,
 	Text
@@ -24,19 +25,19 @@ class Home extends React.Component{
 		var that = this
 		Parse.Cloud.run('getDataForAndroid', {}).then(
 			function(result){
-				console.warn("[HOME API] Result: " + JSON.stringify(result, null, 2))
+				//console.warn("[HOME API] Result: " + JSON.stringify(result, null, 2))
 			},
 			function(error){
-				console.warn("[HOME API] Error: " + JSON.stringify(error, null, 2))
+				//console.warn("[HOME API] Error: " + JSON.stringify(error, null, 2))
 			}
-		)		
+		)
 	}
 	render(){
 		return(
 			<View style={styles.container}>
 				<View style={styles.section}>
 					<View>
-						<Text style={styles.center}>Overhead Tank</Text>
+						<Text style={styles.title}>Overhead Tank</Text>
 						<View style={styles.row}>
 							<View style={styles.column}>
 								<View style={styles.tankWrapper}>
@@ -51,7 +52,7 @@ class Home extends React.Component{
 				</View>
 				<View style={styles.section}>
 					<View>
-						<Text style={styles.center}>Basement Tank</Text>
+						<Text style={styles.title}>Basement Tank</Text>
 						<View style={styles.row}>
 							<View style={styles.column}>
 								<View style={styles.tankWrapper}>
@@ -75,11 +76,11 @@ const styles = StyleSheet.create({
 	},
 	section: {
 		flex: 1,
-		padding: 20,
-		justifyContent: 'center'
+		padding: 20
 	},
-	center: {
-		alignSelf: 'center'
+	title: {
+		fontSize: 20,
+		fontWeight: 'bold'
 	},
 	tankWrapper: {
 		width: null,
@@ -110,7 +111,11 @@ const styles = StyleSheet.create({
 	},
 	column: {
 		flex: 1
-	}
+	},
+	toolbar:{
+    	height: 55,
+    	backgroundColor: '#2196F3',
+  	}
 })
 
 const mapStateToProps = state => {

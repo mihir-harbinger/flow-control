@@ -1,25 +1,32 @@
 import React from 'react'
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import BackgroundImage from '../../assets/glyph-city.png'
-
 import { 
 	StyleSheet,
 	Image,
 	View, 
 	Text 
 } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import BackgroundImage from '../../assets/glyph-city.png'
+
+import { fetchMaxHeight } from '../actions'
+
 
 class Splash extends React.Component{
 	componentDidMount(){
-		this.timer = setTimeout(
-			() => this.props.navigator.replace({name: 'home'}), 
-		1500)
+		this.props.actions.fetchMaxHeight()
+		// this.timer = setTimeout(
+		// 	() => this.props.navigator.replace({name: 'home'}), 
+		// 1500)
 	}
 	render(){
+		const { isFetching } = this.props
 		return(
 			<View style={styles.container}>
 				<View style={styles.section}>
-					<Icon name="tune" size={50} color="#000000"></Icon>
+					<Icon name="tune" size={50}></Icon>
 					<Text style={styles.title}>Flow Control</Text>
 					<Text>Smart City Makers' Fest</Text>
 				</View>
@@ -56,4 +63,19 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default Splash
+const mapStateToProps = state => {
+	return {
+		isFetching: state.isFetching
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		actions: bindActionCreators({fetchMaxHeight}, dispatch)
+	}
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Splash)
